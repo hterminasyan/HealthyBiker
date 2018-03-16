@@ -20,9 +20,9 @@
 			<OverflowToolbar id="otbFooter">
 				<ToolbarSpacer/>
 				<OverflowToolbarButton id="NavigateActivities" class="sapUiSmallMarginBeginEnd" text="Activities" press="onNavigateActivities"
-					visible="true"/>
-				<OverflowToolbarButton id="NavigateProfile" class="sapUiSmallMarginBeginEnd" text="Profile" press="onNavigateProfile" visible="true"/>
-				<OverflowToolbarButton id="NavigateTripOverview" class="sapUiSmallMarginBeginEnd" text="Map" press="onNavigateTripOverview" visible="true"/>
+					visible="true" icon="sap-icon://physical-activity"/>
+				<OverflowToolbarButton id="NavigateProfile" class="sapUiSmallMarginBeginEnd" text="Profile" press="onNavigateProfile" visible="true" icon="sap-icon://account"/>
+				<OverflowToolbarButton id="NavigateTripOverview" class="sapUiSmallMarginBeginEnd" text="Map" press="onNavigateTripOverview" visible="true" icon="sap-icon://map-2"/>
 			</OverflowToolbar>
 		</footer>
 	</Page>
