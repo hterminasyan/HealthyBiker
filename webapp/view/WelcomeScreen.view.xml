@@ -1,0 +1,29 @@
+<mvc:View controllerName="com.sap.healtybiker.HealtyBiker.controller.WelcomeScreen" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic" xmlns:footerbar="sap.ushell.ui.footerbar">
+	<Page showHeader="false">
+		<content>
+			<VBox alignItems="Center">
+				<Text text="Healthy Bike" class="sapUiLargeMarginBottom measurementsTexts" textAlign="Center" width="100%"/>
+				<Label text="PM Measurements" class="measurementsTexts sapUiLargeMarginBottom"/>
+				<HBox class="sapUiLargeMarginBottom">
+					<Text text="PM 10" class="measurementsTexts sapUiSmallMarginEnd"/>
+					<Text id="PM10Measurement" class="measurementsTexts" text="Dummy"/>
+				</HBox>
+				<HBox class="sapUiLargeMarginBottom">
+					<Text text="PM 2.5" class="measurementsTexts sapUiSmallMarginEnd"/>
+					<Text id="PM25Measurement" class="measurementsTexts" text="Dummy"/>
+				</HBox>
+				<Button id="tripButton" text="Start Trip" press="onTripPress" class="sapUiSmallMarginBeginEnd measurementsTexts"/>
+			</VBox>
+		</content>
+		<footer>
+			<OverflowToolbar id="otbFooter">
+				<ToolbarSpacer/>
+				<OverflowToolbarButton id="NavigateActivities" class="sapUiSmallMarginBeginEnd" text="Activities" press="onNavigateActivities"
+					visible="true"/>
+				<OverflowToolbarButton id="NavigateProfile" class="sapUiSmallMarginBeginEnd" text="Profile" press="onNavigateProfile" visible="true"/>
+				<OverflowToolbarButton id="NavigateTripOverview" class="sapUiSmallMarginBeginEnd" text="Map" press="onNavigateTripOverview" visible="true"/>
+			</OverflowToolbar>
+		</footer>
+	</Page>
+</mvc:View>

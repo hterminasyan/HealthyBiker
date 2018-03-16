@@ -8,7 +8,7 @@ sap.ui.define([
 ], function(BaseController, JSONModel, History, formatter, Filter, FilterOperator) {
 	"use strict";
 
-	return BaseController.extend("com.sap.healtybiker.HealtyBiker.controller.Worklist", {
+	return BaseController.extend("com.sap.healtybiker.HealtyBiker.controller.WelcomeScreen", {
 
 		formatter: formatter,
 

@@ -102,9 +102,9 @@
 			"routes": [
 				{
 					"pattern": "",
-					"name": "worklist",
+					"name": "welcomescreen",
 					"target": [
-						"worklist"
+						"welcomescreen"
 					]
 				},
 				{
@@ -116,9 +116,9 @@
 				}
 			],
 			"targets": {
-				"worklist": {
-					"viewName": "Worklist",
-					"viewId": "worklist",
+				"welcomescreen": {
+					"viewName": "WelcomeScreen",
+					"viewId": "welcomescreen",
 					"viewLevel": 1,
 					"title": "{i18n>worklistViewTitle}"
 				},
@@ -137,6 +137,11 @@
 					"viewId": "notFound"
 				}
 			}
+		},
+		"resources": {
+			"css": [{
+				"uri": "css/style.css"
+			}]
 		}
 	},
 	"sap.platform.hcp": {

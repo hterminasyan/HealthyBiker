@@ -25,7 +25,8 @@ sap.ui.define([
 			// initialize the error handler with the component
 			this._oErrorHandler = new ErrorHandler(this);
 
-			sap.ui.getCore().loadLibrary("openui5.googlemaps", "ressource/openui5/googlemaps/");
+			var oRootPath = jQuery.sap.getModulePath("com.sap.healtybiker.HealtyBiker");
+			sap.ui.getCore().loadLibrary("openui5.googlemaps", oRootPath + "/ressource/openui5/googlemaps/");
 
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
