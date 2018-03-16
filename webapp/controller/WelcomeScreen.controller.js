@@ -97,6 +97,9 @@ sap.ui.define([
 		onNavigateTripOverview: function(oEvent) {
 			this.getRouter().navTo("tripoverview");
 		},
+		onNavigateWelcome: function(oEvent) {
+			this.getRouter().navTo("welcomescreen");
+		},
 
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered

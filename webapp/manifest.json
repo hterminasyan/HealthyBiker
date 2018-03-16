@@ -108,18 +108,20 @@
 					]
 				},
 				{
-				"pattern": "activities",
-				"name": "activities",
-				"target": "activities"
-			}, {
-				"pattern": "profile",
-				"name": "profile",
-				"target": "profile"
-			}, {
-				"pattern": "tripoverview",
-				"name": "tripoverview",
-				"target": "tripoverview"
-			},
+					"pattern": "activities",
+					"name": "activities",
+					"target": "activities"
+				},
+				{
+					"pattern": "profile",
+					"name": "profile",
+					"target": "profile"
+				},
+				{
+					"pattern": "tripoverview",
+					"name": "tripoverview",
+					"target": "tripoverview"
+				},
 				{
 					"pattern": "T_IOT_D225176AE8FB5D12880E/{objectId}",
 					"name": "object",
@@ -149,7 +151,6 @@
 					"viewName": "NotFound",
 					"viewId": "notFound"
 				},
-				
 				"activities": {
 					"viewName": "ActivitiesOverview",
 					"viewLevel": 1,
@@ -171,9 +172,11 @@
 			}
 		},
 		"resources": {
-			"css": [{
-				"uri": "css/style.css"
-			}]
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
 		}
 	},
 	"sap.platform.hcp": {
