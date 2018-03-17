@@ -48,10 +48,10 @@ sap.ui.define([
 			});
 		},
 
-
 		setupPolylines: function() {
 			if (this.oMap.getPolylines().length > 0) {
 				//return;
+				this.oPolyline.destroy();
 			}
 
 			var lineSymbol = {
@@ -59,8 +59,7 @@ sap.ui.define([
 				strokeOpacity: 0.5,
 				scale: 4
 			};
-
-			this.oMap.addPolyline(new openui5.googlemaps.Polyline({
+			this.oPolyline = new openui5.googlemaps.Polyline({
 				path: this.getPaths(),
 				strokeColor: "#0000FF",
 				strokeOpacity: 0.5,
@@ -71,7 +70,8 @@ sap.ui.define([
 					offset: '0',
 					repeat: '10px'
 				}]
-			}));
+			});
+			this.oMap.addPolyline(this.oPolyline);
 
 		},
 		getPaths: function() {
@@ -88,6 +88,7 @@ sap.ui.define([
 
 		onTripChanged: function(oEvent) {
 
+			this.oMap.setZoom(6);
 			var oModel = this.getView().getModel();
 			var sSelection = oEvent.getSource().getSelectedKey();
 			var aFilter = [new Filter("C_TRIPID", FilterOperator.EQ, sSelection)];
