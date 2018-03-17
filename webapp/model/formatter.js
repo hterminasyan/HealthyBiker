@@ -18,15 +18,15 @@ sap.ui.define([], function() {
 
 		pinIcon: function(sValue) {
 			if (sValue > 100) {
-				return "../ressource/logo1.png";
+				return "/ressource/logo1.png";
 			} else if (sValue > 50 && sValue <= 100) {
-				return "../ressource/logo2.png";
+				return "/ressource/logo2.png";
 			} else if (sValue > 35 && sValue <= 50) {
-				return "../ressource/logo3.png";
-			} else if (sValue > 20 && sValue <= 35) {
-				return "../ressource/logo4.png";
-			} else if (sValue > 0 && sValue <= 20) {
-				return "../ressource/logo5.png";
+				return "/ressource/logo3.png";
+			} else if (sValue > 10 && sValue <= 35) {
+				return "/ressource/logo4.png";
+			} else if (sValue > 0 && sValue <= 10) {
+				return "/ressource/logo5.png";
 			}
 
 		}

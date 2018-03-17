@@ -20,6 +20,12 @@ sap.ui.define([
 		 */
 		onInit: function() {
 			//	var x = "x";
+			var oRootPath = jQuery.sap.getModulePath("com.sap.healtybiker.HealtyBiker"); 
+			var oImageModel = new sap.ui.model.json.JSONModel({
+				path: oRootPath
+			});
+
+			this.setModel(oImageModel, "imageModel");
 		},
 
 		onBeforeRendering: function() {

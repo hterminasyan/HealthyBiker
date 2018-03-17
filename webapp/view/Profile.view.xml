@@ -6,7 +6,7 @@
 				<content>
 					<VBox>
 						<HBox>
-							<Image src="../ressource/profileimage.png"/>
+							<Image src="{imageModel>/path}/ressource/profileimage.png"/>
 							<VBox>
 								<Link text="+33 6 4512 5158"/>
 								<Link text="DeniseSmith@sap.com"/>

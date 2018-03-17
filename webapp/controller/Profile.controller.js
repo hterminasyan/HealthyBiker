@@ -18,9 +18,14 @@ sap.ui.define([
 		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
 		 * @memberOf com-gameofcode-bikerappbikerapp.view.Profile
 		 */
-		//	onInit: function() {
-		//
-		//	},
+		onInit: function() {
+			var oRootPath = jQuery.sap.getModulePath("com.sap.healtybiker.HealtyBiker");
+			var oImageModel = new sap.ui.model.json.JSONModel({
+				path: oRootPath
+			});
+
+			this.setModel(oImageModel, "imageModel");
+		},
 
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
