@@ -10,7 +10,7 @@
 							<VBox alignItems="Center" alignContent="SpaceBetween" height="100%">
 								<Image src="{imageModel>/path}/ressource/profileimage2.png"/>
 								<HBox alignItems="Center" alignContent="SpaceBetween">
-									<Image src="{imageModel>/path}/ressource/memberImage.png"/>
+									<Image src="{imageModel>/path}/ressource/memberImage.png"/> 
 									<Text text="Member since : 03-17-18"/>
 								</HBox>
 							</VBox>
