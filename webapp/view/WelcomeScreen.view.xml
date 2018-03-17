@@ -22,11 +22,11 @@
 					<Text id="averagePM25Measurement" class="measurementsTexts" text=""/>
 				</HBox>
 				<Text id="HealthLevel" text="Health Level" class="measurementsTexts sapUiSmallMarginEnd sapUiLargeMarginBottom" visible="false"/>
-				<mc:RadialMicroChart id="HealthLevelChart" size="M" percentage="0" press="press" visible="false"
-					class="sapUiSmallMarginEnd sapUiSmallMarginBottom"></mc:RadialMicroChart>
+				<mc:RadialMicroChart id="HealthLevelChart" size="M" percentage="0" press="press" visible="false" 
+					class="sapUiSmallMarginEnd sapUiLargeMarginBottom"></mc:RadialMicroChart>
 				<mc:RadialMicroChart id="HealthLevelChartAverage" size="M" percentage="0" press="press" visible="false"
-					class="sapUiSmallMarginEnd sapUiSmallMarginBottom"></mc:RadialMicroChart>
-				<Button id="tripButton" text="Start Trip" press="onTripPress" class="tripButton sapUiSmallMarginBeginEnd measurementsTexts"/>
+					class="sapUiSmallMarginEnd sapUiLargeMarginBottom"></mc:RadialMicroChart>
+				<Button id="tripButton" text="Start Trip" press="onTripPress" class="buttonAlign tripButton sapUiSmallMarginBeginEnd measurementsTexts"/>
 			</VBox>
 		</content>
 		<footer>

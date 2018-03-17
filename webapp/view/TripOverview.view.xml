@@ -12,7 +12,7 @@
 					</gmaps:Map>-->
 					<HBox alignItems="Center">
 						<Label text="Choose the Trip: " class="sapUiTinyMarginBeginEnd"/>
-						<Select forceSelection="false" selectedKey="1" change="onTripChanged">
+						<Select forceSelection="false" selectedKey="3" change="onTripChanged">
 							<core:Item key="1" text="Trip 1"/>
 							<core:Item key="2" text="Trip 2"/>
 							<core:Item key="3" text="Trip 3"/>

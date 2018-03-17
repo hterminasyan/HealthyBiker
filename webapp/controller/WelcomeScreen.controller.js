@@ -59,6 +59,8 @@ sap.ui.define([
 		onTripPress: function(oEvent) {
 			var triggerValue;
 			if (oEvent.getSource().getProperty("text") === "Start Trip") {
+
+				this.getView().byId("tripButton").removeStyleClass("buttonAlign");
 				triggerValue = "start";
 				this.getView().byId("tripButton").setText("Stop Trip");
 				this.getView().byId("PMText").setVisible(true);
@@ -79,6 +81,8 @@ sap.ui.define([
 				this.getView().byId("averagePM25").setVisible(true);
 				this._calculateAveragePerTrip();
 			} else if (oEvent.getSource().getProperty("text") === "Reset") {
+
+				this.getView().byId("tripButton").addStyleClass("buttonAlign");
 				this.getView().byId("PMText").setVisible(false);
 				this.getView().byId("averagePM10").setVisible(false);
 				this.getView().byId("PMTextRecap").setVisible(false);
@@ -90,10 +94,10 @@ sap.ui.define([
 				this.getView().byId("PM25Measurement").setText("");
 				this.getView().byId("averagePM10Measurement").setText("");
 				this.getView().byId("averagePM25Measurement").setText("");
-				this.iTripID = this.iTripID +1;
+				this.iTripID = this.iTripID + 1;
 				return;
 			}
-			
+
 			var settings = {
 				"async": true,
 				"crossDomain": true,
@@ -153,15 +157,15 @@ sap.ui.define([
 			this.trigger = "start";
 
 		},
-		
+
 		onAfterRendering: function() {
 			var that = this;
 			window.setInterval(function() {
 				that._updateSensorDataForDashboard();
 			}, 5000);
-		}, 
-		
-		_getSensorDataForChart: function(){
+		},
+
+		_getSensorDataForChart: function() {
 			var oModel;
 			var that = this;
 			oModel = this.getView().getModel();
@@ -181,7 +185,7 @@ sap.ui.define([
 				}.bind(this)
 			});
 		},
-		
+
 		_updateSensorDataForDashboard: function() {
 			var oModel;
 			oModel = this.getView().getModel();
@@ -196,7 +200,13 @@ sap.ui.define([
 					this.getView().setModel(oIoTDataModel, "iotDataModel");
 					this.getView().byId("PM10Measurement").setText(this.getView().getModel("iotDataModel").getData().C_PM10 + " μg/m³");
 					this.getView().byId("PM25Measurement").setText(this.getView().getModel("iotDataModel").getData().C_PM2 + " μg/m³");
-					this.getView().byId("HealthLevelChart").setPercentage(100 - parseInt(this.getView().getModel("iotDataModel").getData().C_PM2));
+					var iHealfLevel = 100 - parseInt(this.getView().getModel("iotDataModel").getData().C_PM2);
+					this.getView().byId("HealthLevelChart").setPercentage(iHealfLevel);
+					if (iHealfLevel <= 50) {
+						this.getView().byId("HealthLevelChart").setValueColor("Error");
+					} else if (iHealfLevel > 50) {
+						this.getView().byId("HealthLevelChart").setValueColor("Good");
+					}
 					//this.getView().byId("averagePM10Measurement").setText(this.getView().getModel("iotDataModel").getData().C_PM10 + " μg/m³");
 					//this.getView().byId("averagePM25Measurement").setText(this.getView().getModel("iotDataModel").getData().C_PM2 + " μg/m³");
 				}.bind(this),
@@ -206,7 +216,7 @@ sap.ui.define([
 				}.bind(this)
 			});
 		},
-		
+
 		_calculateAveragePerTrip: function() {
 			var oModel;
 			oModel = this.getView().getModel("iotDataModelChart");
@@ -215,16 +225,22 @@ sap.ui.define([
 			var averagePM10 = 0;
 			for (var k = 0, n = data.length; k < n; k++) {
 				averagePM2 += parseInt(data[k].C_PM2);
-				averagePM10 +=  parseInt(data[k].C_PM10);
+				averagePM10 += parseInt(data[k].C_PM10);
 			}
-			averagePM2=averagePM2/n;
-			averagePM10=averagePM10/n;
-			averagePM2=(parseFloat(averagePM2).toFixed(2));
-			averagePM10=(parseFloat(averagePM10).toFixed(2));
+			averagePM2 = averagePM2 / n;
+			averagePM10 = averagePM10 / n;
+			averagePM2 = (parseFloat(averagePM2).toFixed(2));
+			averagePM10 = (parseFloat(averagePM10).toFixed(2));
 			this.getView().byId("averagePM10Measurement").setText(averagePM2);
 			this.getView().byId("averagePM25Measurement").setText(averagePM10);
-			this.getView().byId("HealthLevelChartAverage").setPercentage(100 - averagePM2);
-			this.getView().byId("PMTextRecap").setText("Recap of  Trip: " + this.iTripID.toString() );
+			var iHealfLevel = 100 - averagePM2;
+			this.getView().byId("HealthLevelChartAverage").setPercentage(iHealfLevel);
+			if (iHealfLevel <= 50) {
+				this.getView().byId("HealthLevelChartAverage").setValueColor("Error");
+			} else if (iHealfLevel > 50) {
+				this.getView().byId("HealthLevelChartAverage").setValueColor("Good");
+			}
+			this.getView().byId("PMTextRecap").setText("Recap of  Trip: " + this.iTripID.toString());
 		}
 	});
 });
