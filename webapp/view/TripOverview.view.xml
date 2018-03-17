@@ -22,7 +22,7 @@
 					</HBox>
 					<gmaps:Map id="googleMaps" class="googleMap" height="550px" zoom="5" lat="49.636535" lng="6.14178666667" markers="{iotDataModel>/}" ready="onMapReady"
 						fitToMarkers="true" apiKey="AIzaSyCXQ2Szfm1Db1uXUnsj9-Bz7ySoxMqhfP8">
-						<gmaps:Marker lat="{iotDataModel>C_LAT}" lng="{iotDataModel>C_LONG}" info="{iotDataModel>C_PM2}" icon="{imageModel>/path}{path: 'iotDataModel>C_PM2', formatter: '.formatter.pinIcon'}" animation="0" click="onMarkerClick"></gmaps:Marker>
+						<gmaps:Marker lat="{iotDataModel>C_LAT}" lng="{iotDataModel>C_LONG}" info="PM2: {iotDataModel>C_PM2}, PM10: {iotDataModel>C_PM10}" icon="{imageModel>/path}{path: 'iotDataModel>C_PM2', formatter: '.formatter.pinIcon'}" animation="0" click="onMarkerClick"></gmaps:Marker>
 					</gmaps:Map>
 				</content>
 				<footer>

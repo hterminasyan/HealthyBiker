@@ -1,9 +1,56 @@
-<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:vbm="sap.ui.vbm" xmlns:l="sap.ui.layout"
+	xmlns:viz="sap.viz.ui5.controls" xmlns:viz.data="sap.viz.ui5.data" xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
 	controllerName="com.sap.healtybiker.HealtyBiker.controller.ActivitiesOverview" xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
 		<pages>
-			<Page title="Title">
-				<content></content>
+			<Page showHeader="false">
+				<content>
+					<Panel height="500px" class="kpiPanels">
+						<HBox alignItems="Center">
+							<Label text="Choose the Trip: " class="sapUiTinyMarginBeginEnd"/>
+							<Select forceSelection="false" selectedKey="1" change="onTripChanged">
+								<core:Item key="1" text="Trip 1"/>
+								<core:Item key="2" text="Trip 2"/>
+								<core:Item key="3" text="Trip 3"/>
+								<core:Item key="4" text="Trip 4"/>
+								<core:Item key="5" text="Trip 5"/>
+							</Select>
+						</HBox>
+						<viz:VizFrame id="idVizFrameTemperatur" uiConfig="{applicationSet:'fiori'}" height='100%' width="100%" vizType='line'>
+							<viz:dataset>
+								<viz.data:FlattenedDataset data="{path: 'iotDataModel>/'}">
+									<viz.data:dimensions>
+										<viz.data:DimensionDefinition name="Date"
+											value="{path: 'iotDataModel>G_CREATED', type:'sap.ui.model.type.Date', formatOptions:{pattern:'dd.MM HH:mm:ss'}}" dataType="date"/>
+									</viz.data:dimensions>
+									<viz.data:measures>
+										<viz.data:MeasureDefinition name="PM2" value="{iotDataModel>C_PM2}"/>
+										<viz.data:MeasureDefinition name="PM10" value="{iotDataModel>C_PM10}"/>
+									</viz.data:measures>
+								</viz.data:FlattenedDataset>
+							</viz:dataset>
+							<viz:feeds>
+								<viz.feeds:FeedItem id='valueAxisFeedTemperaturAvg' uid="valueAxis" type="Measure" values="PM2"/>
+								<viz.feeds:FeedItem id='valueAxisFeedTemperaturMax' uid="valueAxis" type="Measure" values="PM10"/>
+								<viz.feeds:FeedItem id='categoryAxisFeedTemperatur' uid="categoryAxis" type="Dimension" values="Date"/>
+							</viz:feeds>
+						</viz:VizFrame>
+					</Panel>
+				</content>
+				<footer>
+					<OverflowToolbar id="otbFooter">
+						<ToolbarSpacer/>
+						<OverflowToolbarButton id="NavigateWelcome" class="sapUiSmallMarginBeginEnd" text="Activities" press="onNavigateWelcome" visible="true"
+							icon="sap-icon://performance"/>
+						<OverflowToolbarButton id="NavigateTripOverview" class="sapUiSmallMarginBeginEnd" text="Map" press="onNavigateTripOverview" visible="true"
+							icon="sap-icon://map-2"/>
+						<OverflowToolbarButton id="NavigateActivities" class="sapUiSmallMarginBeginEnd" text="Activities" press="onNavigateActivities"
+							visible="true" icon="sap-icon://physical-activity"/>
+						<OverflowToolbarButton id="NavigateProfile" class="sapUiSmallMarginBeginEnd" text="Profile" press="onNavigateProfile" visible="true"
+							icon="sap-icon://account"/>
+						<ToolbarSpacer/>
+					</OverflowToolbar>
+				</footer>
 			</Page>
 		</pages>
 	</App>
