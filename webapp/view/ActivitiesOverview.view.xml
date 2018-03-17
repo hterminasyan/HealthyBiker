@@ -5,7 +5,7 @@
 		<pages>
 			<Page showHeader="false">
 				<content>
-					<Panel height="500px" class="kpiPanels">
+					<Panel height="100%" class="kpiPanels">
 						<HBox alignItems="Center">
 							<Label text="Choose the Trip: " class="sapUiTinyMarginBeginEnd"/>
 							<Select forceSelection="false" selectedKey="1" change="onTripChanged">
@@ -16,7 +16,7 @@
 								<core:Item key="5" text="Trip 5"/>
 							</Select>
 						</HBox>
-						<viz:VizFrame id="idVizFrameTemperatur" uiConfig="{applicationSet:'fiori'}" height='100%' width="100%" vizType='line'>
+						<viz:VizFrame id="idVizFrameTemperatur" vizProperties="{ title: {text : 'Your trip Overview', visible : true}}" uiConfig="{applicationSet:'fiori'}" height='85%' width="100%" vizType='line'>
 							<viz:dataset>
 								<viz.data:FlattenedDataset data="{path: 'iotDataModel>/'}">
 									<viz.data:dimensions>
@@ -24,13 +24,13 @@
 											value="{path: 'iotDataModel>G_CREATED', type:'sap.ui.model.type.Date', formatOptions:{pattern:'dd.MM HH:mm:ss'}}" dataType="date"/>
 									</viz.data:dimensions>
 									<viz.data:measures>
-										<viz.data:MeasureDefinition name="PM2" value="{iotDataModel>C_PM2}"/>
+										<viz.data:MeasureDefinition name="PM2.5" value="{iotDataModel>C_PM2}"/>
 										<viz.data:MeasureDefinition name="PM10" value="{iotDataModel>C_PM10}"/>
 									</viz.data:measures>
 								</viz.data:FlattenedDataset>
 							</viz:dataset>
 							<viz:feeds>
-								<viz.feeds:FeedItem id='valueAxisFeedTemperaturAvg' uid="valueAxis" type="Measure" values="PM2"/>
+								<viz.feeds:FeedItem id='valueAxisFeedTemperaturAvg' uid="valueAxis" type="Measure" values="PM2.5"/>
 								<viz.feeds:FeedItem id='valueAxisFeedTemperaturMax' uid="valueAxis" type="Measure" values="PM10"/>
 								<viz.feeds:FeedItem id='categoryAxisFeedTemperatur' uid="categoryAxis" type="Dimension" values="Date"/>
 							</viz:feeds>
