@@ -37,6 +37,14 @@
       "description": "SAPUI5 Test Resources"
     },
     {
+      "path": "/iotgameofcode",
+      "target": {
+        "type": "destination",
+        "name": "iotgameofcode"
+      },
+      "description": "IotMMS for Game Of Codes"
+    },
+    {
       "path": "/com.sap.iotservices.mms/",
       "target": {
         "type": "destination",

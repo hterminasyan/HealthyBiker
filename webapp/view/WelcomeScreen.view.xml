@@ -1,18 +1,27 @@
 <mvc:View controllerName="com.sap.healtybiker.HealtyBiker.controller.WelcomeScreen" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"
-	xmlns:semantic="sap.f.semantic" xmlns:footerbar="sap.ushell.ui.footerbar">
+	xmlns:semantic="sap.f.semantic" xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:mc="sap.suite.ui.microchart">
 	<Page showHeader="false">
 		<content>
 			<VBox alignItems="Center">
 				<Text text="Healthy Bike" class="sapUiLargeMarginBottom measurementsTexts" textAlign="Center" width="100%"/>
 				<Label text="PM Measurements" class="measurementsTexts sapUiLargeMarginBottom"/>
-				<HBox class="sapUiLargeMarginBottom">
-					<Text text="PM 10" class="measurementsTexts sapUiSmallMarginEnd"/>
-					<Text id="PM10Measurement" class="measurementsTexts" text="Dummy"/>
+				<HBox class="sapUiLargeMarginBottom" id="measurementPM10" visible="false">
+					<Text text="Current PM 10:" class="measurementsTexts sapUiSmallMarginEnd"/>
+					<Text id="PM10Measurement" class="measurementsTexts" text=""/>
 				</HBox>
-				<HBox class="sapUiLargeMarginBottom">
-					<Text text="PM 2.5" class="measurementsTexts sapUiSmallMarginEnd"/>
-					<Text id="PM25Measurement" class="measurementsTexts" text="Dummy"/>
+				<HBox class="sapUiLargeMarginBottom" id="measurementPM25" visible="false">
+					<Text text="Current PM 2.5:" class="measurementsTexts sapUiSmallMarginEnd"/>
+					<Text id="PM25Measurement" class="measurementsTexts" text=""/>
 				</HBox>
+				<HBox class="sapUiLargeMarginBottom" id="averagePM10" visible="false">
+					<Text text="Your Average PM 10 during this Trip: " class="measurementsTexts sapUiSmallMarginEnd"/>
+					<Text id="averagePM10Measurement" class="measurementsTexts" text=""/>
+				</HBox>
+				<HBox class="sapUiLargeMarginBottom" id="averagePM25" visible="false">
+					<Text text="Your Average PM 2.5 during this Trip: " class="measurementsTexts sapUiSmallMarginEnd"/>
+					<Text id="averagePM25Measurement" class="measurementsTexts" text=""/>
+				</HBox>
+				<Text text="Health Level" class="measurementsTexts sapUiSmallMarginEnd"/>
 				<Button id="tripButton" text="Start Trip" press="onTripPress" class="sapUiSmallMarginBeginEnd measurementsTexts"/>
 			</VBox>
 		</content>
@@ -21,8 +30,10 @@
 				<ToolbarSpacer/>
 				<OverflowToolbarButton id="NavigateActivities" class="sapUiSmallMarginBeginEnd" text="Activities" press="onNavigateActivities"
 					visible="true" icon="sap-icon://physical-activity"/>
-				<OverflowToolbarButton id="NavigateProfile" class="sapUiSmallMarginBeginEnd" text="Profile" press="onNavigateProfile" visible="true" icon="sap-icon://account"/>
-				<OverflowToolbarButton id="NavigateTripOverview" class="sapUiSmallMarginBeginEnd" text="Map" press="onNavigateTripOverview" visible="true" icon="sap-icon://map-2"/>
+				<OverflowToolbarButton id="NavigateProfile" class="sapUiSmallMarginBeginEnd" text="Profile" press="onNavigateProfile" visible="true"
+					icon="sap-icon://account"/>
+				<OverflowToolbarButton id="NavigateTripOverview" class="sapUiSmallMarginBeginEnd" text="Map" press="onNavigateTripOverview" visible="true"
+					icon="sap-icon://map-2"/>
 			</OverflowToolbar>
 		</footer>
 	</Page>

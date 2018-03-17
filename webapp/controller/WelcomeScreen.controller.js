@@ -4,8 +4,9 @@ sap.ui.define([
 	"sap/ui/core/routing/History",
 	"com/sap/healtybiker/HealtyBiker/model/formatter",
 	"sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator"
-], function(BaseController, JSONModel, History, formatter, Filter, FilterOperator) {
+	"sap/ui/model/FilterOperator",
+	"sap/ui/model/Sorter"
+], function(BaseController, JSONModel, History, formatter, Filter, FilterOperator, Sorter) {
 	"use strict";
 
 	return BaseController.extend("com.sap.healtybiker.HealtyBiker.controller.WelcomeScreen", {
@@ -21,9 +22,7 @@ sap.ui.define([
 		 * @public
 		 */
 		onInit: function() {
-			this.trigger = "start";
-			this.iTripID = 1;
-
+			// Stop the current Trip if Window closes
 			jQuery(window).bind('beforeunload', function(e) {
 				if (this.trigger === "stop") {
 					var iTripID = this.iTripID;
@@ -63,11 +62,24 @@ sap.ui.define([
 			if (oEvent.getSource().getProperty("text") === "Start Trip") {
 				triggerValue = "start";
 				this.getView().byId("tripButton").setText("Stop Trip");
+				this.getView().byId("measurementPM10").setVisible(true);
+				this.getView().byId("measurementPM25").setVisible(true);
 			} else if (oEvent.getSource().getProperty("text") === "Stop Trip") {
 				triggerValue = "stop";
 				this.getView().byId("tripButton").setText("Reset");
+				this.getView().byId("measurementPM10").setVisible(false);
+				this.getView().byId("measurementPM25").setVisible(false);
+				this.getView().byId("averagePM10").setVisible(true);
+				this.getView().byId("averagePM25").setVisible(true);
+				this._calculateAveragePerTrip();
 			} else if (oEvent.getSource().getProperty("text") === "Reset") {
+				this.getView().byId("averagePM10").setVisible(false);
+				this.getView().byId("averagePM25").setVisible(false);
 				this.getView().byId("tripButton").setText("Start Trip");
+				this.getView().byId("PM10Measurement").setText("");
+				this.getView().byId("PM25Measurement").setText("");
+				this.getView().byId("averagePM10Measurement").setText("");
+				this.getView().byId("averagePM25Measurement").setText("");
 				return;
 			}
 			iTripID = this.iTripID;
@@ -106,18 +118,96 @@ sap.ui.define([
 		onBeforeRendering: function() {
 			var oModel;
 			oModel = this.getView().getModel();
+			var oSorter = [new Sorter("C_TRIPID", true)];
+			//var oFilter = [new Filter("C_TRIPID", FilterOperator.GE, 1)];
 
 			oModel.read("/ACME.T_IOT_D225176AE8FB5D12880E", {
+				sorters: oSorter,
+				//filters: oFilter,
 				success: function(oData) {
-					var oReviewCycleModel = new sap.ui.model.json.JSONModel(oData.results[0]);
-					this.getView().setModel(oReviewCycleModel, "iotDataModel");
+					var oIoTDataModel = new sap.ui.model.json.JSONModel(oData.results[0]);
+					this.getView().setModel(oIoTDataModel, "iotDataModelTrip");
+					this.iTripID = this.getView().getModel("iotDataModelTrip").getData().C_TRIPID;
+					this._getSensorDataForChart();
+				}.bind(this),
+				error: function(oError) {
+					var sResponseText = JSON.parse(oError.responseText);
+					jQuery.sap.log.error(sResponseText);
+					this.iTripID = 0;
+				}.bind(this)
+			});
+			this.trigger = "start";
+
+		},
+		
+		onAfterRendering: function() {
+			var that = this;
+			window.setInterval(function() {
+				that._updateSensorDataForDashboard();
+			}, 5000);
+		}, 
+		
+		_getSensorDataForChart: function(){
+			var oModel;
+			var that = this;
+			oModel = this.getView().getModel();
+			var oSorter = [new Sorter("G_CREATED", true)];
+			var oFilter = [new Filter("C_TRIPID", FilterOperator.EQ, that.iTripID)];
+
+			oModel.read("/ACME.T_IOT_D225176AE8FB5D12880E", {
+				sorters: oSorter,
+				filters: oFilter,
+				success: function(oData) {
+					var oIoTDataModel = new sap.ui.model.json.JSONModel(oData.results);
+					this.getView().setModel(oIoTDataModel, "iotDataModelChart");
 				}.bind(this),
 				error: function(oError) {
 					var sResponseText = JSON.parse(oError.responseText);
 					jQuery.sap.log.error(sResponseText);
 				}.bind(this)
 			});
-		}
+		},
+		
+		_updateSensorDataForDashboard: function() {
+			var oModel;
+			oModel = this.getView().getModel();
+			var oSorter = [new Sorter("G_CREATED", true)];
+			var oFilter = [new Filter("C_TRIPID", FilterOperator.GE, 1)];
 
+			oModel.read("/ACME.T_IOT_D225176AE8FB5D12880E", {
+				sorters: oSorter,
+				filters: oFilter,
+				success: function(oData) {
+					var oIoTDataModel = new sap.ui.model.json.JSONModel(oData.results[0]);
+					this.getView().setModel(oIoTDataModel, "iotDataModel");
+					this.getView().byId("PM10Measurement").setText(this.getView().getModel("iotDataModel").getData().C_PM10 + " μg/m³");
+					this.getView().byId("PM25Measurement").setText(this.getView().getModel("iotDataModel").getData().C_PM2 + " μg/m³");
+					//this.getView().byId("averagePM10Measurement").setText(this.getView().getModel("iotDataModel").getData().C_PM10 + " μg/m³");
+					//this.getView().byId("averagePM25Measurement").setText(this.getView().getModel("iotDataModel").getData().C_PM2 + " μg/m³");
+				}.bind(this),
+				error: function(oError) {
+					var sResponseText = JSON.parse(oError.responseText);
+					jQuery.sap.log.error(sResponseText);
+				}.bind(this)
+			});
+		},
+		
+		_calculateAveragePerTrip: function() {
+			var oModel;
+			oModel = this.getView().getModel("iotDataModelChart");
+			var data = oModel.getData();
+			var averagePM2 = 0;
+			var averagePM10 = 0;
+			for (var k = 0, n = data.length; k < n; k++) {
+				averagePM2 += parseInt(data[k].C_PM2);
+				averagePM10 +=  parseInt(data[k].C_PM10);
+			}
+			averagePM2=averagePM2/n;
+			averagePM10=averagePM10/n;
+			averagePM2=(parseFloat(averagePM2).toFixed(2));
+			averagePM10=(parseFloat(averagePM10).toFixed(2));
+			this.getView().byId("averagePM10Measurement").setText(averagePM2);
+			this.getView().byId("averagePM25Measurement").setText(averagePM10);
+		}
 	});
 });
