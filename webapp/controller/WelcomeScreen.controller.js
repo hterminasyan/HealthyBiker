@@ -70,6 +70,8 @@ sap.ui.define([
 			} else if (oEvent.getSource().getProperty("text") === "Stop Trip") {
 				triggerValue = "stop";
 				this.getView().byId("tripButton").setText("Reset");
+				this.getView().byId("PMText").setVisible(false);
+				this.getView().byId("PMTextRecap").setVisible(true);
 				this.getView().byId("measurementPM10").setVisible(false);
 				this.getView().byId("measurementPM25").setVisible(false);
 				this.getView().byId("HealthLevelChart").setVisible(false);
@@ -80,6 +82,7 @@ sap.ui.define([
 			} else if (oEvent.getSource().getProperty("text") === "Reset") {
 				this.getView().byId("PMText").setVisible(false);
 				this.getView().byId("averagePM10").setVisible(false);
+				this.getView().byId("PMTextRecap").setVisible(false);
 				this.getView().byId("averagePM25").setVisible(false);
 				this.getView().byId("HealthLevel").setVisible(false);
 				this.getView().byId("HealthLevelChartAverage").setVisible(false);
@@ -221,6 +224,8 @@ sap.ui.define([
 			this.getView().byId("averagePM10Measurement").setText(averagePM2);
 			this.getView().byId("averagePM25Measurement").setText(averagePM10);
 			this.getView().byId("HealthLevelChartAverage").setPercentage(100 - averagePM2);
+			var tripID = parseInt(this.getView().getModel("iotDataModelTrip").getData().C_TRIPID) +1;
+			this.getView().byId("PMTextRecap").setText("Recap of  Trip: " + tripID.toString() );
 		}
 	});
 });

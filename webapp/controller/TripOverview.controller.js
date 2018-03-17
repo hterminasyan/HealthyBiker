@@ -20,12 +20,14 @@ sap.ui.define([
 		 */
 		onInit: function() {
 			//	var x = "x";
-			var oRootPath = jQuery.sap.getModulePath("com.sap.healtybiker.HealtyBiker"); 
+			this.oMap = this.byId("googleMaps");
+			var oRootPath = jQuery.sap.getModulePath("com.sap.healtybiker.HealtyBiker");
 			var oImageModel = new sap.ui.model.json.JSONModel({
 				path: oRootPath
 			});
 
 			this.setModel(oImageModel, "imageModel");
+			this.showPolyline = true;
 		},
 
 		onBeforeRendering: function() {
@@ -37,12 +39,51 @@ sap.ui.define([
 				success: function(oData) {
 					var oReviewCycleModel = new sap.ui.model.json.JSONModel(oData.results);
 					this.getView().setModel(oReviewCycleModel, "iotDataModel");
+					this.setupPolylines();
 				}.bind(this),
 				error: function(oError) {
 					var sResponseText = JSON.parse(oError.responseText);
 					jQuery.sap.log.error(sResponseText);
 				}.bind(this)
 			});
+		},
+
+
+		setupPolylines: function() {
+			if (this.oMap.getPolylines().length > 0) {
+				//return;
+			}
+
+			var lineSymbol = {
+				path: 'M 0,-1 0,1',
+				strokeOpacity: 0.5,
+				scale: 4
+			};
+
+			this.oMap.addPolyline(new openui5.googlemaps.Polyline({
+				path: this.getPaths(),
+				strokeColor: "#0000FF",
+				strokeOpacity: 0.5,
+				strokeWeight: 0.2,
+				visible: this.showPolyline,
+				icons: [{
+					icon: lineSymbol,
+					offset: '0',
+					repeat: '10px'
+				}]
+			}));
+
+		},
+		getPaths: function() {
+			var aPaths = [];
+			this.getView().getModel("iotDataModel").getData().forEach(function(obj) {
+				aPaths.push({
+					lat: obj.C_LAT,
+					lng: obj.C_LONG
+				});
+			});
+
+			return aPaths;
 		},
 
 		onTripChanged: function(oEvent) {
@@ -55,6 +96,7 @@ sap.ui.define([
 				success: function(oData) {
 					var oReviewCycleModel = new sap.ui.model.json.JSONModel(oData.results);
 					this.getView().setModel(oReviewCycleModel, "iotDataModel");
+					this.setupPolylines();
 				}.bind(this),
 				error: function(oError) {
 					var sResponseText = JSON.parse(oError.responseText);

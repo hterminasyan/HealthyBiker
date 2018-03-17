@@ -4,6 +4,7 @@
 		<content>
 			<VBox id="bigBox" alignItems="Center" alignContent="SpaceBetween" height="100%">
 				<Label id="PMText" text="PM Measurements" class="measurementsTexts sapUiLargeMarginTopBottom" visible="false"/>
+				<Label id="PMTextRecap" text="PM Measurements" class="measurementsTexts sapUiLargeMarginTopBottom" visible="false"/>
 				<HBox class="sapUiMediumMarginBottom " id="measurementPM10" visible="false">
 					<Text id="PM10MeasurementText" text="Current PM 10:" class="measurementsTexts sapUiSmallMarginEnd"/>
 					<Text id="PM10Measurement" class="measurementsTexts" text=""/>
