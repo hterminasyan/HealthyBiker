@@ -1,9 +1,17 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller"
-], function(Controller) {
+	"com/sap/healtybiker/HealtyBiker/controller/BaseController",
+	"sap/ui/model/json/JSONModel",
+	"sap/ui/core/routing/History",
+	"com/sap/healtybiker/HealtyBiker/model/formatter",
+	"sap/ui/model/Filter",
+	"sap/ui/model/FilterOperator",
+	"sap/ui/model/Sorter"
+], function(BaseController, JSONModel, History, formatter, Filter, FilterOperator, Sorter) {
 	"use strict";
 
-	return Controller.extend("com.sap.healtybiker.HealtyBiker.controller.Profile", {
+	return BaseController.extend("com.sap.healtybiker.HealtyBiker.controller.Profile", {
+
+		formatter: formatter,
 
 		/**
 		 * Called when a controller is instantiated and its View controls (if available) are already created.
@@ -39,6 +47,31 @@ sap.ui.define([
 		//	onExit: function() {
 		//
 		//	}
+
+		onNavigateActivities: function(oEvent) {
+			this.getRouter().navTo("activities");
+		},
+		onNavigateProfile: function(oEvent) {
+			this.getRouter().navTo("profile");
+		},
+		onNavigateTripOverview: function(oEvent) {
+			this.getRouter().navTo("tripoverview");
+		},
+		onNavigateWelcome: function(oEvent) {
+			this.getRouter().navTo("welcomescreen");
+		},
+
+		onNavBack: function() {
+			var oHistory = History.getInstance();
+			var sPreviousHash = oHistory.getPreviousHash();
+
+			if (sPreviousHash !== undefined) {
+				window.history.go(-1);
+			} else {
+				var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+				oRouter.navTo("overview", true);
+			}
+		}
 
 	});
 
