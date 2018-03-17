@@ -88,7 +88,7 @@ sap.ui.define([
 
 		onTripChanged: function(oEvent) {
 
-			this.oMap.setZoom(6);
+			this.oMap.setZoom(12);
 			var oModel = this.getView().getModel();
 			var sSelection = oEvent.getSource().getSelectedKey();
 			var aFilter = [new Filter("C_TRIPID", FilterOperator.EQ, sSelection)];
