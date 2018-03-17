@@ -58,7 +58,6 @@ sap.ui.define([
 
 		onTripPress: function(oEvent) {
 			var triggerValue;
-			var iTripID;
 			if (oEvent.getSource().getProperty("text") === "Start Trip") {
 				triggerValue = "start";
 				this.getView().byId("tripButton").setText("Stop Trip");
@@ -91,9 +90,10 @@ sap.ui.define([
 				this.getView().byId("PM25Measurement").setText("");
 				this.getView().byId("averagePM10Measurement").setText("");
 				this.getView().byId("averagePM25Measurement").setText("");
+				this.iTripID = this.iTripID +1;
 				return;
 			}
-			iTripID = this.iTripID;
+			
 			var settings = {
 				"async": true,
 				"crossDomain": true,
@@ -103,7 +103,7 @@ sap.ui.define([
 					"Content-Type": "text/plain"
 				},
 				"data": "{\r  \"method\":\"http\", \r  \"sender\":\"IoT App\", \r  \"messageType\":\"7b062f460509846af9ab\",\r  \"messages\": [{tripid: " +
-					iTripID + ", trigger: " + triggerValue + "}]\r}\r"
+					this.iTripID + ", trigger: " + triggerValue + "}]\r}\r"
 			};
 
 			$.ajax(settings).done(function(response) {
@@ -224,8 +224,7 @@ sap.ui.define([
 			this.getView().byId("averagePM10Measurement").setText(averagePM2);
 			this.getView().byId("averagePM25Measurement").setText(averagePM10);
 			this.getView().byId("HealthLevelChartAverage").setPercentage(100 - averagePM2);
-			var tripID = parseInt(this.getView().getModel("iotDataModelTrip").getData().C_TRIPID) +1;
-			this.getView().byId("PMTextRecap").setText("Recap of  Trip: " + tripID.toString() );
+			this.getView().byId("PMTextRecap").setText("Recap of  Trip: " + this.iTripID.toString() );
 		}
 	});
 });
