@@ -13,4 +13,9 @@
 	height: 3.5rem;
 	border-radius: 12rem;
     border-width: 0.1rem;
-} 
+}
+
+.personDescrip{
+	font-size: 1rem;
+	margin: auto;
+}

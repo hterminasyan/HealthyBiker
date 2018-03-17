@@ -1,19 +1,59 @@
-<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.uxap" xmlns:layout="sap.ui.layout"
-	controllerName="com.sap.healtybiker.HealtyBiker.controller.Profile" xmlns:html="http://www.w3.org/1999/xhtml">
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:u="sap.ui.unified" xmlns="sap.m" xmlns:l="sap.uxap"
+	xmlns:layout="sap.ui.layout" controllerName="com.sap.healtybiker.HealtyBiker.controller.Profile" xmlns:mc="sap.suite.ui.microchart"
+	xmlns:html="http://www.w3.org/1999/xhtml">
 	<App>
 		<pages>
 			<Page showHeader="false">
-				<content>
-					<VBox>
-						<HBox>
-							<Image src="{imageModel>/path}/ressource/profileimage.png"/>
-							<VBox>
-								<Link text="+33 6 4512 5158"/>
-								<Link text="DeniseSmith@sap.com"/>
+				<content >
+					<VBox class="personDescrip sapUiLargeMarginTopBottom sapUiLargeMarginBeginEnd" alignContent="SpaceBetween">
+						<HBox alignItems="Center" height="100%">
+							<VBox alignItems="Center" alignContent="SpaceBetween" height="100%">
+								<Image src="{imageModel>/path}/ressource/profileimage2.png"/>
+								<HBox alignItems="Center" alignContent="SpaceBetween">
+									<Image src="{imageModel>/path}/ressource/memberImage.png"/>
+									<Text text="Member since : 03-17-18"/>
+								</HBox>
 							</VBox>
+						</HBox>
+						<HBox alignItems="Center" height="100%">
+							<VBox alignContent="SpaceBetween" height="100%">
+								<HBox alignItems="Center">
+									<Image src="{imageModel>/path}/ressource/personrImage.png"/>
+									<VBox>
+										<Text text="Last Name: Smith "></Text>
+										<Text text="First Name: Denise "></Text>
+									</VBox>
+								</HBox>
+								<HBox alignItems="Center" visible="false">
+									<Image src="{imageModel>/path}/ressource/personrImage.png"/>
+									<VBox>
+										<Text text="Last Name: Smith "></Text>
+										<Text text="First Name: Denise "></Text>
+									</VBox>
+								</HBox>
+								
+								<HBox alignItems="Center">
+									<Image src="{imageModel>/path}/ressource/birthday.png"/>
+									<Text text="08-07-1996"/>
+								</HBox>
+								<HBox alignItems="Center">
+									<Image src="{imageModel>/path}/ressource/countryFlag.png"/>
+									<Text text="Luxembourg"/>
+								</HBox>
+								<HBox alignItems="Center" alignContent="SpaceBetween">
+									<Image src="{imageModel>/path}/ressource/telImage.png"/>
+									<Link text="  +33 6 4512 5158"/>
+								</HBox>
+								<HBox alignItems="Center" alignContent="SpaceBetween">
+									<Image src="{imageModel>/path}/ressource/mailImage.png"/>
+									<Link text="  DeniseSmith@sap.com"/>
+								</HBox>
+							</VBox>
+							<ToolbarSpacer/>
 						</HBox>
 					</VBox>
 				</content>
+				<content></content>
 				<footer>
 					<OverflowToolbar id="otbFooter">
 						<ToolbarSpacer/>
