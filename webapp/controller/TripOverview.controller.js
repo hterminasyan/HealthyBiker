@@ -4,8 +4,9 @@ sap.ui.define([
 	"sap/ui/core/routing/History",
 	"com/sap/healtybiker/HealtyBiker/model/formatter",
 	"sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator"
-], function(BaseController, JSONModel, History, formatter, Filter, FilterOperator) {
+	"sap/ui/model/FilterOperator",
+	"sap/ui/model/Sorter"
+], function(BaseController, JSONModel, History, formatter, Filter, FilterOperator, Sorter) {
 	"use strict";
 
 	return BaseController.extend("com.sap.healtybiker.HealtyBiker.controller.TripOverview", {
@@ -21,7 +22,7 @@ sap.ui.define([
 
 		onBeforeRendering: function() {
 			var oModel = this.getView().getModel();
-			var aFilter = [new Filter("C_TRIPID", FilterOperator.GE, 0)];
+			var aFilter = [new Filter("C_TRIPID", FilterOperator.EQ, 1)];
 
 			oModel.read("/ACME.T_IOT_D225176AE8FB5D12880E", {
 				filters: aFilter,
@@ -34,6 +35,25 @@ sap.ui.define([
 					jQuery.sap.log.error(sResponseText);
 				}.bind(this)
 			});
+		},
+
+		onTripChanged: function(oEvent) {
+
+			var oModel = this.getView().getModel();
+			var sSelection = oEvent.getSource().getSelectedKey();
+			var aFilter = [new Filter("C_TRIPID", FilterOperator.EQ, sSelection)];
+			oModel.read("/ACME.T_IOT_D225176AE8FB5D12880E", {
+				filters: aFilter,
+				success: function(oData) {
+					var oReviewCycleModel = new sap.ui.model.json.JSONModel(oData.results);
+					this.getView().setModel(oReviewCycleModel, "iotDataModel");
+				}.bind(this),
+				error: function(oError) {
+					var sResponseText = JSON.parse(oError.responseText);
+					jQuery.sap.log.error(sResponseText);
+				}.bind(this)
+			});
+
 		},
 
 		/**
