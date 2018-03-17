@@ -1,6 +1,19 @@
 /* Enter your custom styles here */
 
 .measurementsTexts{
-	font-size: 2rem;
+	font-size: 1.5rem;
 	color: #5cbae6;
+}
+
+.tripButton .sapMBtnInner{
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	color: #f2d249;
+	font-size: 1.5rem;
+	width: 20rem;
+	height: 5rem;
+	border-radius: 15rem;
+    border-width: 0.2rem;
+    border-color: #5cbae6;
 }

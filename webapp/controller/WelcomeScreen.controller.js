@@ -62,19 +62,27 @@ sap.ui.define([
 			if (oEvent.getSource().getProperty("text") === "Start Trip") {
 				triggerValue = "start";
 				this.getView().byId("tripButton").setText("Stop Trip");
+				this.getView().byId("PMText").setVisible(true);
+				this.getView().byId("HealthLevel").setVisible(true);
 				this.getView().byId("measurementPM10").setVisible(true);
 				this.getView().byId("measurementPM25").setVisible(true);
+				this.getView().byId("HealthLevelChart").setVisible(true);
 			} else if (oEvent.getSource().getProperty("text") === "Stop Trip") {
 				triggerValue = "stop";
 				this.getView().byId("tripButton").setText("Reset");
 				this.getView().byId("measurementPM10").setVisible(false);
 				this.getView().byId("measurementPM25").setVisible(false);
+				this.getView().byId("HealthLevelChart").setVisible(false);
+				this.getView().byId("HealthLevelChartAverage").setVisible(true);
 				this.getView().byId("averagePM10").setVisible(true);
 				this.getView().byId("averagePM25").setVisible(true);
 				this._calculateAveragePerTrip();
 			} else if (oEvent.getSource().getProperty("text") === "Reset") {
+				this.getView().byId("PMText").setVisible(false);
 				this.getView().byId("averagePM10").setVisible(false);
 				this.getView().byId("averagePM25").setVisible(false);
+				this.getView().byId("HealthLevel").setVisible(false);
+				this.getView().byId("HealthLevelChartAverage").setVisible(false);
 				this.getView().byId("tripButton").setText("Start Trip");
 				this.getView().byId("PM10Measurement").setText("");
 				this.getView().byId("PM25Measurement").setText("");
@@ -185,6 +193,7 @@ sap.ui.define([
 					this.getView().setModel(oIoTDataModel, "iotDataModel");
 					this.getView().byId("PM10Measurement").setText(this.getView().getModel("iotDataModel").getData().C_PM10 + " μg/m³");
 					this.getView().byId("PM25Measurement").setText(this.getView().getModel("iotDataModel").getData().C_PM2 + " μg/m³");
+					this.getView().byId("HealthLevelChart").setPercentage(100 - parseInt(this.getView().getModel("iotDataModel").getData().C_PM2));
 					//this.getView().byId("averagePM10Measurement").setText(this.getView().getModel("iotDataModel").getData().C_PM10 + " μg/m³");
 					//this.getView().byId("averagePM25Measurement").setText(this.getView().getModel("iotDataModel").getData().C_PM2 + " μg/m³");
 				}.bind(this),
@@ -211,6 +220,7 @@ sap.ui.define([
 			averagePM10=(parseFloat(averagePM10).toFixed(2));
 			this.getView().byId("averagePM10Measurement").setText(averagePM2);
 			this.getView().byId("averagePM25Measurement").setText(averagePM10);
+			this.getView().byId("HealthLevelChartAverage").setPercentage(100 - averagePM2);
 		}
 	});
 });
